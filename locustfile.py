@@ -2,17 +2,17 @@ from locust import HttpUser, task, between
 
 from fixtures.record import account_payload
 from fixtures.auth import auth_payload
-from settings import SALESFORCE_BASE_URL, AUTH_TOKEN
+from settings import SALESFORCE_BASE_URL, AUTH_TOKEN, AUTHENTICATE
 
 
 class SalesforceCreateRecordComposeRestApiUser(HttpUser):
     wait_time = between(1, 2.5)
 
-    def get_headers(self, authenticate = False):
+    def get_headers(self):
         token = None
         params = auth_payload
 
-        if not authenticate:
+        if not AUTHENTICATE:
             token = AUTH_TOKEN
         else:
             try:
